@@ -1,0 +1,32 @@
+@import '../settings';
+
+.new-post-modal {
+    background-color: $color-2;
+    width: 80%;
+    border-radius: 10px 10px 0 10px;
+    padding: 10px;
+
+    form {
+      display: flex;
+      flex-direction: column;
+      padding: 10px;
+      textarea {
+        width: 100%;
+        height: 104px;
+        font-size: 1.3rem;
+        border-radius: 10px 10px 0 10px;
+      }
+      input {
+        width: 100px;
+        margin-left: auto;
+        margin-top: 0px;
+        border-radius: 10px 0 10px 10px;
+        background-color: $color-3;
+        color: $color-4;
+      }
+    }
+  }
+ .user-info{
+        font-family: $font-3;
+        font-size: larger
+    }

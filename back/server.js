@@ -1,6 +1,6 @@
 const http = require('http');
 const app = require('./app');
-
+const cors = require('cors');
 const normalizePort = val => {
   const port = parseInt(val, 10);
 
@@ -34,6 +34,16 @@ const errorHandler = error => {
       throw error;
   }
 };
+
+const corsOptions = {
+  origin: process.env.CLIENT_URL,
+  credentials: true,
+  'allowedHeaders': ['sessionId', 'Content-Type'],
+  'exposedHeaders': ['sessionId'],
+  'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  'preflightContinue': false
+}
+app.use(cors(corsOptions));
 
 const server = http.createServer(app);
 
