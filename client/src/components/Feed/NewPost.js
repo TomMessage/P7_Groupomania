@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { setPost } from '../features/postsSlice';
+import { setPost } from '../../features/postsSlice';
 import { useDispatch, useSelector } from "react-redux";
 
 
@@ -9,15 +9,11 @@ function NewPost() {
     const dispatch = useDispatch();
     const [message, setMessage] = useState("");
 
-    const handlePost = () => {
-
+    const handlePost = (e) => {
+        e.preventDefault();
         if(message) {
-            const data = new FormData();
-            data.append('posterId', userData._id);
-            data.append('message', message);
-
-
-            dispatch(setPost(data));
+            //create post,
+            console.log(message)
         } else {
             alert("Veuillez entrer un message")
         }
@@ -28,8 +24,12 @@ function NewPost() {
             <div className="user-info">{userPseudo} - Ecrivez un nouveau post
             </div>
             <form>
-                <textarea placeholder="Message..."></textarea>
-                <input type="submit" value="Envoyer" onSubmit={handlePost} />
+                <textarea name="message"
+                    id="message"
+                    placeholder="Quoi de neuf ?"
+                    onChange={(e) => setMessage(e.target.value)}
+                    value={message}></textarea>
+                <input type="submit" value="Envoyer" onClick={handlePost} />
             </form>
         </div>
     );

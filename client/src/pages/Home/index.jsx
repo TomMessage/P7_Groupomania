@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import Logout from '../../components/Log/Logout';
-import NewPost from '../../components/NewPost';
+import NewPost from '../../components/Feed/NewPost';
 import Log from '../../components/Log'
-import Posts from '../../components/Posts';
+import PostContainer from '../../components/Feed/PostContainer';
 
 function Home() {
 
@@ -20,8 +20,12 @@ function Home() {
       </header>
       <div className='home'>
         {isLogged ? <NewPost /> : <Log signin={false} signup={true} />}
+        <br />
+        <h1>Publications récentes</h1>
+        <br />
+        <PostContainer />
       </div>
-      <Posts />
+
     </div>
   )
 }

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux'
 import { setUser } from '../../features/usersSlice'
-import axios from "axios";
+
 
 
 function SignIn() {
@@ -40,7 +40,7 @@ function SignIn() {
 
                     localStorage.setItem('token', token);
                     localStorage.setItem('userId', userId);
-                    localStorage.setItem('pseudo', pseudo)
+                    localStorage.setItem('pseudo', pseudo);
 
                     console.log(data);
                     dispatch(
@@ -48,8 +48,6 @@ function SignIn() {
                             token,
                             userId,
                         }))
-
-
                 };
                 navigate('/');
             }

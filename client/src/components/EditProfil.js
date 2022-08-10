@@ -1,32 +1,48 @@
 import { useEffect } from 'react'
 import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
-import usersSlice, { setUser } from '../features/usersSlice';
 import { Navigate } from 'react-router-dom';
-import UploadImg from './uploadImage';
+import { useState } from 'react';
+import authorizationHeader from './authorizationHeader';
+
 
 
 function EditProfil() {
-    const dispatch = useDispatch()
+    const [imageUrl, setImageUrl] = useState({})
+    const [pseudo, setPseudo] = useState({})
 
-    useEffect(() => {
 
-        axios
-            .get('http://localhost:4000/api/user/getOneUser/')
-            .then((res) => dispatch(setUser(res.data)))
+    useEffect(() => { // affichage du user
 
+        const getUser = async () => {
+
+            axios.get(`http://localhost:4000/api/user/me`, { headers: { 'Authorization': authorizationHeader } })
+                .then((res) => console.log(res.data))
+                //.then((res) => res.data)
+
+                .then(({ pseudo }) => {
+                    setPseudo(pseudo)
+                })
+
+
+        }
+        getUser();
     }, []);
 
 
-    const saveUserNewInfos = () => {
-        // si il y a des changements sur la page profil : les sauvegarder
+
+
+
+    const saveUserNewInfos = (e) => {
+        e.preventDefault();
+        // si il y a des changements sur la page profil : les sauvegarder au clic sur le bouton enregistrer 
+
+        console.log('profil sauvegardé')
     };
 
     const deleteUserAccount = () => {
         if(!window.confirm(`Voulez-vous vraiment désactiver le compte ?`)) return;
 
-        const userId = JSON.parse(localStorage.getItem("user")).user_id;
-        axios.get(`http://localhost:4200/api/user/deleteUser/${userId}`);
+        // axios.delete(`http://localhost:4000/api/user/${user_Id}`); 
         localStorage.clear();
 
         Navigate("/connexion");
@@ -37,17 +53,17 @@ function EditProfil() {
     return (
         <div className='profil-page'>
             <form className="editProfil" >
-                <div className="editProfil__photo">
+                <div className="editProfil__photo">s
                     <div className="profil-photo">
-                        <img src='./img/profile-defaut.jpg' alt="profile_picture" />
+                        <img src={imageUrl} alt="profile_picture" />
                     </div>
                     <br />
-                    <UploadImg />
+                    <input type='file' name='img' id='img' />
                 </div>
                 <br />
                 <div className="editProfil__pseudo">
                     <label htmlFor='pseudo'>Pseudo </label>
-                    <input type="text" name="pseudo" id="pseudo" />
+                    <input type="text" name="pseudo" id="pseudo" value={pseudo} onChange={(e) => setPseudo(e.target.value)} />
                 </div>
                 <br />
 
@@ -57,7 +73,7 @@ function EditProfil() {
                         name="editProfil__save"
                         id="editProfil__save"
                         value="Enregistrer"
-                        onSubmit={saveUserNewInfos}
+                        onClick={saveUserNewInfos}
                     />
                 </div>
                 <br />
@@ -67,7 +83,7 @@ function EditProfil() {
                         name="editProfil__delete"
                         id="editProfil__delete"
                         value="Supprimer le compte"
-                        onSubmit={deleteUserAccount}
+                        onClick={deleteUserAccount}
                     />
                 </div>
             </form>

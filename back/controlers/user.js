@@ -9,13 +9,15 @@ exports.getAll = (req, res, next) => {
         res.status(500).json({ message: 'impossible de récupérer les utilisateurs', error });
     }
 }
-exports.getOneUser = (req, res, next) => {
+exports.getOneUser = async (req, res, next) => {
     try {
-        const user = User.findOne().select("-password");
+        const user = await User.findOne({ _id: req.auth.userId }).select("-password");
         res.status(200).json(user);
     } catch(error) {
-        res.status(500).json({ message: 'impossible de récupérer l\'utilisateur', error });
+        res.status(500).json({ message: 'impossible de récupérer l\'utilisateurs', error });
     }
+
+
 }
 exports.modifyUser = (req, res, next) => {
     const userObject = req.file ? {
