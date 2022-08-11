@@ -1,12 +1,10 @@
 import { useState } from 'react';
-import { setPost } from '../../features/postsSlice';
-import { useDispatch, useSelector } from "react-redux";
+
 
 
 function NewPost() {
     const userPseudo = localStorage.getItem('pseudo');
-    const userData = useSelector((state) => state.userReducer);
-    const dispatch = useDispatch();
+
     const [message, setMessage] = useState("");
 
     const handlePost = (e) => {

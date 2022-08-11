@@ -4,37 +4,31 @@ import { Navigate } from 'react-router-dom';
 import { useState } from 'react';
 import authorizationHeader from './authorizationHeader';
 
-
-
 function EditProfil() {
-    const [imageUrl, setImageUrl] = useState({})
     const [pseudo, setPseudo] = useState({})
 
-
-    useEffect(() => { // affichage du user
-
+    useEffect(() => {
         const getUser = async () => {
 
             axios.get(`http://localhost:4000/api/user/me`, { headers: { 'Authorization': authorizationHeader } })
-                .then((res) => console.log(res.data))
-                //.then((res) => res.data)
+                .then((res) => res.data)
 
-                .then(({ pseudo }) => {
-                    setPseudo(pseudo)
+                .then((data) => {
+                    console.log(data);
+                    setPseudo(data.pseudo)
                 })
-
-
         }
         getUser();
     }, []);
 
-
-
-
-
     const saveUserNewInfos = (e) => {
         e.preventDefault();
         // si il y a des changements sur la page profil : les sauvegarder au clic sur le bouton enregistrer 
+        axios.put(`http://localhost:4000/api/user/${this.userId}`, { headers: { 'Authorization': authorizationHeader } })
+            .then((res) => res.data)
+            .then((data) => {
+                setPseudo(data.pseudo)
+            })
 
         console.log('profil sauvegardé')
     };
@@ -42,23 +36,37 @@ function EditProfil() {
     const deleteUserAccount = () => {
         if(!window.confirm(`Voulez-vous vraiment désactiver le compte ?`)) return;
 
-        // axios.delete(`http://localhost:4000/api/user/${user_Id}`); 
-        localStorage.clear();
+        axios.delete(`http://localhost:4000/api/user/${this.userId}`, { headers: { 'Authorization': authorizationHeader } })
+            .then(res => {
+                console.log(res.data);
+            })
+        localStorage.clear()
 
-        Navigate("/connexion");
+        Navigate("/connexion")
     };
 
+    const imageUrl = 'https://api.thecatapi.com/v1/images/search';
+    const [img, setImg] = useState();
 
+    const fetchProfilePic = async () => {
+        const res = await axios.get(imageUrl).then((res) => res.data[0].url);
+
+        const imageObjectURL = (res);
+        setImg(imageObjectURL);
+
+    };
+    useEffect(() => {
+        fetchProfilePic();
+    }, []);
+    console.log(img)
 
     return (
         <div className='profil-page'>
             <form className="editProfil" >
-                <div className="editProfil__photo">s
+                <div className="editProfil__photo">
                     <div className="profil-photo">
-                        <img src={imageUrl} alt="profile_picture" />
+                        <img src={img} alt="profile_picture" />
                     </div>
-                    <br />
-                    <input type='file' name='img' id='img' />
                 </div>
                 <br />
                 <div className="editProfil__pseudo">

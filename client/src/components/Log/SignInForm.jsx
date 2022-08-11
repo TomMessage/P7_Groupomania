@@ -14,13 +14,11 @@ function SignIn() {
     const [password, setPassword] = useState('');
 
 
-
     async function handleLogin(e) {
         e.preventDefault();
         const formError = document.querySelector('.form-error');
         let data;
         try {
-
             if(email && password) {
                 const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/login`, {
                     method: 'POST',
@@ -36,7 +34,6 @@ function SignIn() {
                     const token = data.token;
                     const userId = data.userId;
                     const pseudo = data.pseudo;
-
 
                     localStorage.setItem('token', token);
                     localStorage.setItem('userId', userId);

@@ -9,8 +9,10 @@ const displayPosts = ({ post }) => {
 
     // ensuite render la "res" du map.get pour les afficher dynamiquement
     // faire le module d'infinite scroll 
+
     const updatePost = () => {
         //logique de sauvegarde des modifications de posts
+
     }
 
     return (
@@ -22,9 +24,7 @@ const displayPosts = ({ post }) => {
                 </div>
             </div>
             <br />
-            <textarea defaultValue='post du user ici en dynamique'
-
-            />
+            <textarea defaultValue='post du user ici en dynamique' />
 
             <div className="button-container">
                 <LikeButton post={post} />
