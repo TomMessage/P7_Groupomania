@@ -24,11 +24,9 @@ function EditProfil() {
     const saveUserNewInfos = (e) => {
         e.preventDefault();
         // si il y a des changements sur la page profil : les sauvegarder au clic sur le bouton enregistrer 
-        axios.put(`http://localhost:4000/api/user/${this.userId}`, { headers: { 'Authorization': authorizationHeader } })
+        axios.put("http://localhost:4000/api/user/")
             .then((res) => res.data)
-            .then((data) => {
-                setPseudo(data.pseudo)
-            })
+            .then((res) => this.setPseudo)
 
         console.log('profil sauvegardé')
     };
@@ -36,7 +34,7 @@ function EditProfil() {
     const deleteUserAccount = () => {
         if(!window.confirm(`Voulez-vous vraiment désactiver le compte ?`)) return;
 
-        axios.delete(`http://localhost:4000/api/user/${this.userId}`, { headers: { 'Authorization': authorizationHeader } })
+        axios.delete(`http://localhost:4000/api/user/:id`, { headers: { 'Authorization': authorizationHeader } })
             .then(res => {
                 console.log(res.data);
             })
