@@ -1,13 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from 'react-redux'
-import { setUser } from '../../features/usersSlice'
-
 
 
 function SignIn() {
 
-    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const [email, setEmail] = useState('');
@@ -39,12 +35,7 @@ function SignIn() {
                     localStorage.setItem('userId', userId);
                     localStorage.setItem('pseudo', pseudo);
 
-                    console.log(data);
-                    dispatch(
-                        setUser({
-                            token,
-                            userId,
-                        }))
+                    console.log(data)
                 };
                 navigate('/');
             }

@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import SignInForm from "./SignInForm";
-import { useDispatch } from "react-redux";
-import { setUser } from '../../features/usersSlice'
 
 function SignUpForm() {
   const [formSubmit, setFormSubmit] = useState(false);
@@ -10,7 +8,6 @@ function SignUpForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [controlPassword, setControlPassword] = useState("");
-  const dispatch = useDispatch;
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -41,7 +38,7 @@ function SignUpForm() {
             passwordError.innerHTML = res.data.errors.password;
           } else {
             setFormSubmit(true);
-            dispatch(setUser(pseudo));
+
           }
         })
         .catch((err) => console.log(err));

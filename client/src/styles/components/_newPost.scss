@@ -18,15 +18,36 @@
       }
       input {
         width: 100px;
-        margin-left: auto;
+       
         margin-top: 0px;
         border-radius: 10px 0 10px 10px;
         background-color: $color-3;
         color: $color-4;
       }
     }
+    .addPhoto{
+     padding-top: 0px;
+      padding-bottom: 0px;
+      margin-top: 0px;
+      border-radius: 10px 0 10px 10px;
+      background-color: $color-2;
+      color: $color-2;
+  display: flex;
+  align-items: center;
+
+      img{
+        height: 30px;
+        margin-top: 0px;
+        font-size: small;
+       
+      }
+    }
   }
  .user-info{
         font-family: $font-3;
         font-size: larger
+    }
+    .newPostFooter{
+      display: flex;
+      justify-content: space-between;
     }

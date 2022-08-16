@@ -55,8 +55,10 @@ function EditProfil() {
     };
     useEffect(() => {
         fetchProfilePic();
+
     }, []);
     console.log(img)
+
 
     return (
         <div className='profil-page'>

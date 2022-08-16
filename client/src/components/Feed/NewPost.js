@@ -27,7 +27,12 @@ function NewPost() {
                     placeholder="Quoi de neuf ?"
                     onChange={(e) => setMessage(e.target.value)}
                     value={message}></textarea>
-                <input type="submit" value="Envoyer" onClick={handlePost} />
+                <div className='newPostFooter'>
+                    <input type="submit" value="Envoyer" onClick={handlePost} />
+                    <button className='addPhoto'><img src="./icons/image-solid.svg" alt="like" /></button>
+
+                </div>
+
             </form>
         </div>
     );
