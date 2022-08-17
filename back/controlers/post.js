@@ -1,16 +1,23 @@
 const Post = require('../models/post');
 const fs = require('fs');
+const user = require('../models/user');
 
 exports.createPost = (req, res, next) => {
-    const postObject = JSON.parse(req.body.post);
-    delete postObject._id;
-    delete postObject._userId;
+    const postObject = {
+        content: req.body.content,
+    }
+    //  delete postObject._id;
+    // delete postObject._userId;
+
+    console.log(req.auth.userId);
+    if(req.file) {
+        postObject.imageUrl = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    }
     const post = new Post({
         ...postObject,
         userId: req.auth.userId,
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     });
-
+    console.log(post);
     post.save()
         .then(() => { res.status(201).json({ message: 'Objet enregistré !' }) })
         .catch(error => { res.status(400).json({ error }) })
@@ -42,7 +49,8 @@ exports.modifyPost = (req, res, next) => {
 exports.deletePost = (req, res, next) => {
     Post.findOne({ _id: req.params.id })
         .then(post => {
-            if(post.userId != req.auth.userId) {
+            console.log(post)
+            if(post._id != req.auth.userId) {
                 res.status(401).json({ message: 'Non-autorisé' });
             } else {
                 const filename = post.imageUrl.split('/images/')[1];
@@ -93,5 +101,59 @@ exports.likeOrDislike = (req, res, next) => {
                         .catch(error => res.status(400).json({ error }))
                 }
             })
+    }
+};
+
+module.exports.commentPost = async (req, res) => {
+    Post.updateOne(
+        { _id: req.params.id },
+        {
+            $push: {
+                comments: {
+                    commenterId: req.body.commenterId,
+                    text: req.body.text,
+                },
+            },
+        },
+    )
+        .then(() => res.status(200).json({ message: 'commentaire publié' }))
+        .catch((err) => res.status(500).send({ message: err }));
+};
+
+module.exports.editCommentPost = async (req, res) => {
+    if(commenterId != req.auth.userId) {
+        res.status(401).json({ message: 'Non-autorisé' });
+    } else {
+        Post.updateOne(
+            {
+                _id: req.params.id,
+                "comments._id": req.body.commentId,
+            },
+            {
+                $set: {
+                    "comments.$.text": req.body.text,
+                },
+            }
+        )
+            .then(() => res.status(200).json({ message: 'commentaire modifié' }))
+            .catch((err) => res.status(500).send({ message: err }));
+    }
+
+};
+
+module.exports.deleteCommentPost = async (req, res) => {
+    if(commenterId != req.auth.userId) {
+        res.status(401).json({ message: 'Non-autorisé' });
+    } else {
+        Post.updateOne(
+            { _id: req.params.id },
+            {
+                $pull: { comments: { _id: req.body.commentId } },
+            },
+            (err, docs) => {
+                if(!err) res.send(docs);
+                else console.log("il y a une erreur" + err);
+            }
+        );
     }
 };

@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import Logout from '../../components/Log/Logout';
 import NewPost from '../../components/Feed/NewPost';
 import Log from '../../components/Log'
-import PostContainer from '../../components/Feed/PostContainer';
+import Feed from '../../components/Feed/Feed';
 
 function Home() {
 
@@ -23,7 +23,7 @@ function Home() {
         <br />
         <h1>Publications récentes</h1>
         <br />
-        <PostContainer />
+        <Feed />
       </div>
 
     </div>

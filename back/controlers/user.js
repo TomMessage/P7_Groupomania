@@ -22,14 +22,14 @@ exports.getOneUser = async (req, res, next) => {
 exports.modifyUser = (req, res, next) => {
     const userObject = req.file ? {
         ...JSON.parse(req.body.user),
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        pseudo: `pseudo`
     } : { ...req.body };
 
-    delete userObject.userId;
+    // delete userObject.userId;
     console.log(userObject);
     User.findOne({ _id: req.params.id })
         .then((user) => {
-            if(user.userId != req.auth.userId) {
+            if(user._id != req.auth.userId) {
                 res.status(401).json({ message: 'Non-autorisé' });
             } else {
                 user.updateOne({ _id: req.params.id }, { ...userObject })
@@ -44,10 +44,11 @@ exports.modifyUser = (req, res, next) => {
 exports.deleteUser = (req, res, next) => {
     User.findOne({ _id: req.params.id })
         .then(user => {
-            if(user.userId != req.auth.userId) {
+            console.log(user);
+            if(user._id != req.auth.userId) {
                 res.status(401).json({ message: 'Non-autorisé' });
             } else {
-                Post.deleteOne({ _id: req.params.id })
+                User.deleteOne({ _id: req.params.id })
                     .then(() => { res.status(200).json({ message: 'Utilisateur supprimé !' }) })
                     .catch(error => res.status(401).json({ error }));
             }

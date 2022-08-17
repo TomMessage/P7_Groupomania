@@ -5,16 +5,9 @@ import CardComments from './CardComments';
 import EditPost from './EditPost';
 import axios from 'axios';
 
-const displayPosts = ({ post }) => {
+const displayPost = ({ post }) => {
     const userPseudo = localStorage.getItem('pseudo');
 
-    // ensuite render la "res" du map.get pour les afficher dynamiquement
-    // faire le module d'infinite scroll 
-
-    const updatePost = () => {
-        //logique de sauvegarde des modifications de posts
-
-    }
 
 
 
@@ -35,10 +28,7 @@ const displayPosts = ({ post }) => {
                     <EditPost />
                     <DeleteCard />
                 </div>
-
             </div>
-
-
 
             <CardComments post={post} />
 
@@ -46,4 +36,4 @@ const displayPosts = ({ post }) => {
     );
 };
 
-export default displayPosts;
+export default displayPost;

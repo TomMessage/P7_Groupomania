@@ -37,6 +37,7 @@ function SignIn() {
 
                     console.log(data)
                 };
+                window.location.reload();
                 navigate('/');
             }
         }
