@@ -20,11 +20,13 @@ function NewPost() {
                 .then((res) => {
                     console.log(res.data);
                     contentRef.current.reset();
+
                 })
 
         } else {
             alert("Veuillez entrer un message")
         }
+        window.location.reload();
     };
 
     return (
@@ -39,8 +41,11 @@ function NewPost() {
                     value={content}></textarea>
                 <div className='newPostFooter'>
                     <input type="submit" value="Envoyer" />
-                    <button className='addPhoto'><img src="./icons/image-solid.svg" alt="like" /></button>
 
+                    <label htmlFor="file-upload" className='addPhoto'>
+                        <img src="./icons/image-solid.svg" alt="like" />
+                    </label>
+                    <input id="file-upload" type="file" />
                 </div>
 
             </form>

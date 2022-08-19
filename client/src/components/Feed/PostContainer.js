@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import DeleteCard from './DeleteCard';
 import LikeButton from './LikeButton';
 import CardComments from './CardComments';
 import EditPost from './EditPost';
-import axios from 'axios';
+
 
 const displayPost = ({ post }) => {
-    const userPseudo = localStorage.getItem('pseudo');
+    console.log(post.userId)
 
 
 
@@ -16,23 +16,25 @@ const displayPost = ({ post }) => {
             <div className="card-header">
                 <img src="./img/profile-defaut.jpg" alt="profil-pic" />
                 <div className="pseudo">
-                    {userPseudo}
+                    pseudo
                 </div>
             </div>
 
-            <textarea defaultValue='post du user ici en dynamique' />
+            <div >{post.content}</div>
 
             <div className="button-container">
                 <LikeButton post={post} />
                 <div className='modifier'>
-                    <EditPost />
-                    <DeleteCard />
+                    <EditPost post={post} />
+                    <DeleteCard post={post} />
                 </div>
             </div>
 
             <CardComments post={post} />
 
         </div >
+
+
     );
 };
 

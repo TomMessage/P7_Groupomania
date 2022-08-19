@@ -5,6 +5,7 @@ const user = require('../models/user');
 exports.createPost = (req, res, next) => {
     const postObject = {
         content: req.body.content,
+
     }
     //  delete postObject._id;
     // delete postObject._userId;
@@ -127,6 +128,7 @@ module.exports.editCommentPost = async (req, res) => {
         Post.updateOne(
             {
                 _id: req.params.id,
+                commenterId: req.body.commenterId,
                 "comments._id": req.body.commentId,
             },
             {
