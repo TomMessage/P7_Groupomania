@@ -6,6 +6,7 @@ import authorizationHeader from './authorizationHeader';
 
 function EditProfil() {
     const [pseudo, setPseudo] = useState({})
+    const [img, setImg] = useState({})
 
     useEffect(() => {
         const getUser = async () => {
@@ -16,6 +17,7 @@ function EditProfil() {
                 .then((data) => {
                     console.log(data);
                     setPseudo(data.pseudo)
+                    setImg(data.imageUrl)
                 })
         }
         getUser();
@@ -23,11 +25,29 @@ function EditProfil() {
 
     const saveUserNewInfos = (e) => {
         e.preventDefault();
+        var data = JSON.stringify({
+            "pseudo": pseudo
+        });
+        const token = localStorage.getItem('token');
         const userId = localStorage.getItem('userId')
-        axios.put(`http://localhost:4000/api/user/${userId}`, { headers: { 'Authorization': authorizationHeader } })
-            .then((res) => res.data)
-            .then((res) => this.setPseudo)
+        var config = {
+            method: 'put',
+            url: 'http://localhost:4000/api/user/' + userId,
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            },
+            data: data
+        };
 
+        axios(config)
+            .then(function (response) {
+                console.log(JSON.stringify(response.data));
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        localStorage.setItem('pseudo', pseudo);
     };
 
     const deleteUserAccount = () => {
@@ -44,20 +64,7 @@ function EditProfil() {
         Navigate("/connexion")
     };
 
-    const imageUrl = 'https://api.thecatapi.com/v1/images/search';
-    const [img, setImg] = useState();
 
-    const fetchProfilePic = async () => {
-        const res = await axios.get(imageUrl).then((res) => res.data[0].url);
-
-        const imageObjectURL = (res);
-        setImg(imageObjectURL);
-
-    };
-    useEffect(() => {
-        fetchProfilePic();
-
-    }, []);
 
 
     return (

@@ -1,14 +1,22 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
+const axios = require('axios');
 
-exports.signup = (req, res, next) => {
+const url = 'https://api.thecatapi.com/v1/images/search';
+
+
+
+exports.signup = async (req, res, next) => {
+    const imageUrl = await axios.get(url).then((res) => res.data[0].url);
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
             const user = new User({
                 email: req.body.email,
                 password: hash,
                 pseudo: req.body.pseudo,
+                imageUrl,
+
 
             });
             user.save()

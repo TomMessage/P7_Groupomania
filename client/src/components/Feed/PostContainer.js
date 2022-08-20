@@ -1,12 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import DeleteCard from './DeleteCard';
 import LikeButton from './LikeButton';
 import CardComments from './CardComments';
 import EditPost from './EditPost';
+import axios from 'axios';
+import authorizationHeader from '../authorizationHeader';
 
 
-const displayPost = ({ post }) => {
-    console.log(post.userId)
+const DisplayPost = ({ post }) => {
+    console.log(post.userId);
+    console.log(post.pseudo);
+    const [img, setImg] = useState('');
+
+    const getUser = async () => {
+
+        axios.get(`http://localhost:4000/api/user/me`, { headers: { 'Authorization': authorizationHeader } })
+            .then((res) => res.data)
+
+            .then((data) => {
+                setImg(data.imageUrl)
+            })
+    }
+    getUser();
 
 
 
@@ -14,9 +29,9 @@ const displayPost = ({ post }) => {
     return (
         <div className='card-container'>
             <div className="card-header">
-                <img src="./img/profile-defaut.jpg" alt="profil-pic" />
+                <img src={img} alt="profil-pic" />
                 <div className="pseudo">
-                    pseudo
+                    {post.pseudo}
                 </div>
             </div>
 
@@ -38,4 +53,4 @@ const displayPost = ({ post }) => {
     );
 };
 
-export default displayPost;
+export default DisplayPost;

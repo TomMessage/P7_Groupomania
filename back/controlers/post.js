@@ -5,12 +5,12 @@ const user = require('../models/user');
 exports.createPost = (req, res, next) => {
     const postObject = {
         content: req.body.content,
+        pseudo: req.body.pseudo,
+        userImg: req.body.userImg,
 
     }
     //  delete postObject._id;
     // delete postObject._userId;
-
-    console.log(req.auth.userId);
     if(req.file) {
         postObject.imageUrl = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     }
@@ -51,7 +51,7 @@ exports.deletePost = (req, res, next) => {
     Post.findOne({ _id: req.params.id })
         .then(post => {
             console.log(post)
-            if(post._id != req.auth.userId) {
+            if(post.UserId != req.auth.userId) {
                 res.status(401).json({ message: 'Non-autorisé' });
             } else {
                 const filename = post.imageUrl.split('/images/')[1];
@@ -111,7 +111,8 @@ module.exports.commentPost = async (req, res) => {
         {
             $push: {
                 comments: {
-                    commenterId: req.body.commenterId,
+                    userId: req.body.userId,
+                    commenterPseudo: req.body.commenterPseudo,
                     text: req.body.text,
                 },
             },
@@ -121,41 +122,20 @@ module.exports.commentPost = async (req, res) => {
         .catch((err) => res.status(500).send({ message: err }));
 };
 
-module.exports.editCommentPost = async (req, res) => {
-    if(commenterId != req.auth.userId) {
-        res.status(401).json({ message: 'Non-autorisé' });
-    } else {
-        Post.updateOne(
-            {
-                _id: req.params.id,
-                commenterId: req.body.commenterId,
-                "comments._id": req.body.commentId,
-            },
-            {
-                $set: {
-                    "comments.$.text": req.body.text,
-                },
-            }
-        )
-            .then(() => res.status(200).json({ message: 'commentaire modifié' }))
-            .catch((err) => res.status(500).send({ message: err }));
-    }
-
-};
-
 module.exports.deleteCommentPost = async (req, res) => {
-    if(commenterId != req.auth.userId) {
-        res.status(401).json({ message: 'Non-autorisé' });
-    } else {
-        Post.updateOne(
-            { _id: req.params.id },
-            {
-                $pull: { comments: { _id: req.body.commentId } },
-            },
-            (err, docs) => {
-                if(!err) res.send(docs);
-                else console.log("il y a une erreur" + err);
-            }
-        );
-    }
+    // Post.findOne({ _id: req.params.id })
+    // if(userId != req.auth.userId) {
+    //     res.status(401).json({ message: 'Non-autorisé' });
+    // } else {
+    Post.updateOne(
+        { _id: req.params.id },
+        {
+            $pull: { comments: { _id: req.body.commentId } },
+        },
+        (err, docs) => {
+            if(!err) res.send(docs);
+            else console.log("il y a une erreur" + err);
+        }
+    );
+    // }
 };

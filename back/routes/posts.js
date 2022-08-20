@@ -16,7 +16,6 @@ router.post('/:id/like', auth, postCtrl.likeOrDislike);
 // commentaires
 
 router.post("/comment/:id", auth, postCtrl.commentPost);
-router.put("/editComment/:id", auth, postCtrl.editCommentPost);
 router.delete("/deleteComment/:id", auth, postCtrl.deleteCommentPost);
 
 

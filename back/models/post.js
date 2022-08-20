@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 
 const postSchema = mongoose.Schema({
     userId: { type: String, required: true },
-    // pseudo
+    pseudo: { type: String, required: true },
+    userImg: { type: String },
     imageUrl: { type: String, },
     content: { type: String, required: true },
     likes: { type: Number, default: 0 },
@@ -10,7 +11,7 @@ const postSchema = mongoose.Schema({
     comments: {
         type: [
             {
-                commenterId: String,
+                userId: String,
                 commenterPseudo: String,
                 text: String,
             },

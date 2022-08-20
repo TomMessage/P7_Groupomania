@@ -20,10 +20,7 @@ exports.getOneUser = async (req, res, next) => {
 
 }
 exports.modifyUser = (req, res, next) => {
-    const userObject = req.file ? {
-        ...JSON.parse(req.body.user),
-        pseudo: `pseudo`
-    } : { ...req.body };
+    const userObject = { ...req.body };
 
     // delete userObject.userId;
     console.log(userObject);
@@ -32,7 +29,10 @@ exports.modifyUser = (req, res, next) => {
             if(user._id != req.auth.userId) {
                 res.status(401).json({ message: 'Non-autorisé' });
             } else {
-                user.updateOne({ _id: req.params.id }, { ...userObject })
+                User.findOneAndUpdate({ _id: req.params.id }, {
+                    $set:
+                        { pseudo: req.body.pseudo }
+                })
                     .then(() => res.status(200).json({ message: 'Utilisateur modifié!' }))
                     .catch(error => res.status(401).json({ error }));
             }

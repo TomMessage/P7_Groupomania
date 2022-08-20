@@ -13,6 +13,9 @@ const Feed = () => {
             .get(`http://localhost:4000/api/posts/`, { headers: { 'Authorization': authorizationHeader } })
             .then((res) => setPosts(res.data));
     }, []);
+    posts.reverse();
+
+
 
 
     return (
