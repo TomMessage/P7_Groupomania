@@ -4,6 +4,7 @@ import authorizationHeader from '../authorizationHeader';
 import DisplayPost from './PostContainer';
 
 
+
 const Feed = () => {
 
     const [posts, setPosts] = useState([]);
@@ -11,7 +12,8 @@ const Feed = () => {
 
         axios
             .get(`http://localhost:4000/api/posts/`, { headers: { 'Authorization': authorizationHeader } })
-            .then((res) => setPosts(res.data));
+            .then((res) => setPosts(res.data))
+
     }, []);
     posts.reverse();
 

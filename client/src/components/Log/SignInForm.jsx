@@ -30,12 +30,14 @@ function SignIn() {
                     const token = data.token;
                     const userId = data.userId;
                     const pseudo = data.pseudo;
+                    const imageUrl = data.imageUrl;
 
                     localStorage.setItem('token', token);
                     localStorage.setItem('userId', userId);
                     localStorage.setItem('pseudo', pseudo);
+                    localStorage.setItem('imageUrl', imageUrl)
 
-                    console.log(data)
+
                 };
                 window.location.reload();
                 navigate('/');

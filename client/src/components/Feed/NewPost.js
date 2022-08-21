@@ -6,6 +6,7 @@ import authorizationHeader from '../authorizationHeader';
 
 function NewPost() {
     const userPseudo = localStorage.getItem('pseudo');
+    const userImg = localStorage.getItem('imageUrl');
     const contentRef = useRef();
     const pseudoRef = useRef();
 
@@ -21,6 +22,7 @@ function NewPost() {
             var data = JSON.stringify({
                 "content": content,
                 "pseudo": userPseudo,
+                "userImg": userImg
 
             });
             const token = localStorage.getItem('token');
@@ -44,7 +46,7 @@ function NewPost() {
         } else {
             alert("Veuillez entrer un message")
         }
-        // window.location.reload();
+        window.location.reload();
     };
 
 

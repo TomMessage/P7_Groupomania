@@ -44,8 +44,8 @@ exports.login = (req, res, next) => {
                             { userId: user._id, user },
                             process.env.SECRET,
                             { expiresIn: '24h' },
-
-                        )
+                        ),
+                        imageUrl: user.imageUrl
                     });
                 })
                 .catch(error => res.status(500).json({ error }));
