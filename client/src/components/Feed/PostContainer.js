@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import LikeButton from './LikeButton';
 import axios from 'axios';
+import authorizationHeader from '../authorizationHeader';
 
-
-
-const DisplayPost = ({ post }) => {
+const DisplayPost = ({ post, isAdmin }) => {
     const userId = localStorage.getItem('userId');
     const postId = post._id;
     const [editPostModal, setEditPostModal] = useState(false);
     const [content, setContent] = useState("");
+
 
     const editPost = (e) => {
         e.preventDefault();
@@ -34,6 +34,7 @@ const DisplayPost = ({ post }) => {
             .catch(function (error) {
                 console.log(error);
             });
+
         window.location.reload();
     }
 
@@ -72,6 +73,7 @@ const DisplayPost = ({ post }) => {
                     {post.pseudo}
                 </div>
             </div>
+            <br />
             {editPostModal ? <> <form action="" onSubmit={editPost}>
                 <textarea
                     type="text"
@@ -85,13 +87,24 @@ const DisplayPost = ({ post }) => {
                     <p>Envoyer</p>
                 </button>
             </form>
-            </> : <div >{post.content}</div>}
+            </> : <div className='contentAndImage'>
+                <div className='content'>
+                    {post.content}
+                </div>
+                {post.imageUrl && (
+                    <div className="post-imageUrl">
+                        <img src={post.imageUrl} alt="illustration du post" />
+                    </div>
+                )}
+
+            </div>
+            }
 
             <br />
 
             <div className="button-container">
                 <LikeButton post={post} />
-                {(post.userId === userId) && (
+                {(post.userId === userId || isAdmin === true) && (
                     <div className='modifier'>
                         <div onClick={(e) => setEditPostModal(!editPostModal)}>
                             <img src='./icons/pen-to-square-solid.svg' alt="edit" />

@@ -17,6 +17,22 @@ const Feed = () => {
     }, []);
     posts.reverse();
 
+    const [isAdmin, setIsAdmin] = useState(false);
+    useEffect(() => {
+        const getUser = async () => {
+
+            axios.get(`http://localhost:4000/api/user/me`, { headers: { 'Authorization': authorizationHeader } })
+                .then((res) => res.data)
+
+                .then((data) => {
+                    console.log(data.isAdmin);
+                    setIsAdmin(data.isAdmin);
+
+                })
+        }
+        getUser();
+    }, []);
+
 
 
 
@@ -25,7 +41,7 @@ const Feed = () => {
             {
                 posts.map((post, index) => {
                     return (
-                        <DisplayPost key={index} post={post} />
+                        <DisplayPost key={index} post={post} isAdmin={isAdmin} />
                     )
 
 

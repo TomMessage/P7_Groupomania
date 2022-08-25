@@ -69,7 +69,19 @@
     }
 
   }
-
+  .post-imageUrl
+  {width:100%;
+    margin:20px 0 20px 0}
+  .post-imageUrl img
+  {width:100%;
+    height: auto;
+    max-height:450px;
+    object-fit:cover;
+    overflow:hidden;
+    border-radius: 50px;
+    box-shadow: 1px 1px 3px rgba(51, 51, 51, 0.192);}
+  
+  
     .card-pic {
       width: 100%;
       border-radius: 6px;
@@ -129,8 +141,7 @@
         align-items: center;
       }
     }
-    
-    
+ 
     
     .like-container {
       span {
