@@ -21,4 +21,5 @@ cd client
 npm start
 
 Dans le dossier backend : rajouter un dossier images
+
 Dans le dossier frontend rajouter un fichier .env à la racine puis coller le texte suivant :  REACT_APP_API_URL=http://localhost:4000/api
