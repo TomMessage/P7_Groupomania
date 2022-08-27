@@ -3,8 +3,6 @@ import axios from 'axios';
 import authorizationHeader from '../authorizationHeader';
 import DisplayPost from './PostContainer';
 
-
-
 const Feed = () => {
 
     const [posts, setPosts] = useState([]);
@@ -33,9 +31,6 @@ const Feed = () => {
         getUser();
     }, []);
 
-
-
-
     return (
         <>
             {
@@ -43,12 +38,8 @@ const Feed = () => {
                     return (
                         <DisplayPost key={index} post={post} isAdmin={isAdmin} />
                     )
-
-
                 })
             }
-
-
         </>
     );
 };

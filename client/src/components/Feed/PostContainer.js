@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import LikeButton from './LikeButton';
 import axios from 'axios';
-import authorizationHeader from '../authorizationHeader';
 
 const DisplayPost = ({ post, isAdmin }) => {
     const userId = localStorage.getItem('userId');
@@ -9,12 +8,10 @@ const DisplayPost = ({ post, isAdmin }) => {
     const [editPostModal, setEditPostModal] = useState(false);
     const [content, setContent] = useState("");
 
-
     const editPost = (e) => {
         e.preventDefault();
         var data = JSON.stringify({
             "content": content,
-
         });
         const token = localStorage.getItem('token');
         var config = {
@@ -34,10 +31,8 @@ const DisplayPost = ({ post, isAdmin }) => {
             .catch(function (error) {
                 console.log(error);
             });
-
         window.location.reload();
     }
-
 
     const deletePost = (e) => {
         var data = JSON.stringify({
@@ -53,7 +48,6 @@ const DisplayPost = ({ post, isAdmin }) => {
             },
             data: data
         };
-
         axios(config)
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
@@ -65,7 +59,6 @@ const DisplayPost = ({ post, isAdmin }) => {
     };
 
     return (
-
         <div className='card-container'>
             <div className="card-header">
                 <img src={post.userImg} alt="profil-pic" />
@@ -96,12 +89,9 @@ const DisplayPost = ({ post, isAdmin }) => {
                         <img src={post.imageUrl} alt="illustration du post" />
                     </div>
                 )}
-
             </div>
             }
-
             <br />
-
             <div className="button-container">
                 <LikeButton post={post} />
                 {(post.userId === userId || isAdmin === true) && (
@@ -116,12 +106,7 @@ const DisplayPost = ({ post, isAdmin }) => {
                     </div>
                 )}
             </div>
-
-
-
         </div >
-
-
     );
 
 };

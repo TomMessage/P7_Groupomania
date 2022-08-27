@@ -2,13 +2,8 @@ import EditProfil from '../../components/EditProfil';
 import { Link } from 'react-router-dom';
 import Log from '../../components/Log'
 
-
-
-
 function Profile() {
-
     const isLogged = localStorage.getItem('token');
-
 
     return (
         <>

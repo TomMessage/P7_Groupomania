@@ -4,10 +4,7 @@ import "./styles/index.scss"
 import Profil from './pages/Profile'
 import Error from './components/Error';
 
-
 function App() {
-
-
     return (
 
         <Router>

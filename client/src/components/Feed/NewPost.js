@@ -40,18 +40,13 @@ function NewPost() {
                 }
             })
 
-            console.log(picture);
-
             window.location.reload();
         };
     };
 
-
-
     return (
         <div className="new-post-modal">
-            <div className="user-info" >{userPseudo}  - Ecrivez un nouveau post
-            </div>
+            <div className="user-info" >{userPseudo}  - Ecrivez un nouveau post </div>
             <form onSubmit={handlePost} ref={contentRef} >
                 <textarea name="message"
                     id="message"
@@ -59,19 +54,10 @@ function NewPost() {
                     onChange={(e) => setContent(e.target.value)}
                     value={content}></textarea>
                 <div className='newPostFooter'>
-
-
-
-
                     <input id="imageUrl" type="file" name='imageUrl' accept=".jpg, .jpeg, .png, .gif"
-
                         onChange={(e) => setPicture(e.target.files[0])} />
-
                     <input type="submit" value="Envoyer" />
-
-
                 </div>
-
             </form>
         </div>
     );

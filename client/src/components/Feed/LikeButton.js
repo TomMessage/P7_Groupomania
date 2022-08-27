@@ -1,12 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
-
-
 const LikeButton = (post) => {
     const userId = localStorage.getItem('userId')
     const [isLiked, setIsLiked] = useState(false);
-
 
     useEffect(() => {
         if(post.post.likers.includes(userId)) {
@@ -27,9 +24,8 @@ const LikeButton = (post) => {
         } catch(e) {
             console.log(e);
         }
-
-
     };
+
     const handleUnlike = async (e) => {
         e.preventDefault();
         let data = {

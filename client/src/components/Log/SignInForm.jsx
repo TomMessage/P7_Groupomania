@@ -1,14 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-
 function SignIn() {
-
     const navigate = useNavigate();
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
 
     async function handleLogin(e) {
         e.preventDefault();
@@ -63,7 +59,6 @@ function SignIn() {
             <div className='form-error'></div>
             <br />
             <input type="submit" value="Se connecter" />
-
         </form>
     )
 }
